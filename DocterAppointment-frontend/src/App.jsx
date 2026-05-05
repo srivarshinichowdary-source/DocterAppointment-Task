@@ -1,17 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { useState, useEffect } from "react";
+import AuthPage from "./pages/AuthPage";
+import DashboardPage from "./pages/DashboardPage";
+import "./styles/global.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token") || null);
 
-  return (
-    <>
-      
-    </>
-  )
+  useEffect(() => {
+    if (token) {
+      fetch("/api/users/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.id) setUser(data);
+          else handleLogout();
+        })
+        .catch(handleLogout);
+    }
+  }, [token]);
+
+  const handleLogin = (jwt, userData) => {
+    localStorage.setItem("token", jwt);
+    setToken(jwt);
+    setUser(userData);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    setUser(null);
+  };
+
+  if (!user) return <AuthPage onLogin={handleLogin} />;
+  return <DashboardPage user={user} token={token} onLogout={handleLogout} setUser={setUser} />;
 }
-
-export default App
