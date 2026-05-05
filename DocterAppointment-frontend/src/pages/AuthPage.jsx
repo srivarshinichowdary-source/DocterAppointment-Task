@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { apiFetch } from "../api";
 import "../styles/auth.css";
 
 export default function AuthPage({ onLogin }) {
@@ -34,7 +35,7 @@ export default function AuthPage({ onLogin }) {
           // send null (not "") so Spring's @Size(max=20) doesn't choke on empty string
           phone: form.phone.trim() || null,
         };
-        const res = await fetch("/api/auth/register", {
+        const res = await apiFetch("/api/auth/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
@@ -47,7 +48,7 @@ export default function AuthPage({ onLogin }) {
         setForm((f) => ({ ...f, name: "", phone: "" }));
         alert("Registered successfully! Please login.");
       } else {
-        const res = await fetch("/api/auth/login", {
+        const res = await apiFetch("/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: form.email.trim(), password: form.password }),
@@ -55,7 +56,7 @@ export default function AuthPage({ onLogin }) {
         const data = await res.json();
         if (!res.ok) throw new Error(extractError(data));
         // data.token comes from JwtResponse which has a `token` field
-        const meRes = await fetch("/api/users/me", {
+        const meRes = await apiFetch("/api/users/me", {
           headers: { Authorization: `Bearer ${data.token}` },
         });
         const me = await meRes.json();

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import AuthPage from "./pages/AuthPage";
 import DashboardPage from "./pages/DashboardPage";
+import { apiFetch } from "./api";
 import "./styles/global.css";
 
 export default function App() {
@@ -9,7 +10,7 @@ export default function App() {
 
   useEffect(() => {
     if (token) {
-      fetch("/api/users/me", {
+      apiFetch("/api/users/me", {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then((r) => r.json())

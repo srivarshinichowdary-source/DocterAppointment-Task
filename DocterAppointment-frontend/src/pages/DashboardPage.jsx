@@ -2,6 +2,7 @@ import { useState } from "react";
 import BookAppointment from "../components/BookAppointment";
 import MyAppointments from "../components/MyAppointments";
 import ProfileSection from "../components/ProfileSection";
+import { apiFetch } from "../api";
 import "../styles/dashboard.css";
 
 const TABS = [
@@ -15,7 +16,7 @@ export default function DashboardPage({ user, token, onLogout, setUser }) {
   const [refreshKey, setRefreshKey] = useState(0);
 
   const authFetch = (url, opts = {}) =>
-    fetch(url, { ...opts, headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(opts.headers || {}) } });
+    apiFetch(url, { ...opts, headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}`, ...(opts.headers || {}) } });
 
   const onBooked = () => { setRefreshKey((k) => k + 1); setTab("appointments"); };
 
