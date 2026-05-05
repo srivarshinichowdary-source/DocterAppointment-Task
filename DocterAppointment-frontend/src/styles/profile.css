@@ -1,0 +1,53 @@
+.profile-layout { display: flex; flex-direction: column; gap: 1.75rem; }
+.profile-header h2 { font-size: 1.9rem; }
+.profile-header p { color: var(--text-muted); margin-top: 0.25rem; }
+
+.profile-body { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; align-items: start; }
+
+.profile-avatar-section {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.profile-big-avatar {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--accent-dark), var(--accent));
+  color: white;
+  border-radius: 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+  font-family: 'DM Serif Display', serif;
+}
+
+.profile-name-role { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+.profile-display-name { font-weight: 600; font-size: 1rem; }
+.profile-email { font-size: 0.83rem; color: var(--text-muted); }
+
+.profile-form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.profile-form h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
+
+.field-note { font-weight: 300; text-transform: none; font-size: 0.8rem; }
+
+.save-btn { display: flex; align-items: center; gap: 0.5rem; align-self: flex-start; }
+
+.success-msg {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  border-left: 3px solid var(--accent);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 768px) {
+  .profile-body { grid-template-columns: 1fr; }
+}
